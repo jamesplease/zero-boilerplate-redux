@@ -16,10 +16,10 @@ class Gists extends Component {
         {usersGistsStatus.pending && ('Loading gists...')}
         {usersGistsStatus.failed && ('There was an error loading gists.')}
         {usersGistsStatus.succeeded && (
-          <ul>
+          <ul className="Gists-list">
             {usersGists.map(gist => (
               <li key={gist.id}>
-                {username}/{gist.id}
+                {username}/{Object.keys(gist.files)[0]}
               </li>
             ))}
           </ul>
