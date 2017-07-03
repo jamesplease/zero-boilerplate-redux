@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
-import Gists from './Gists';
-import token from './personal-access-token';
+import login from './personal-access-token';
 
-const isLoggedIn = Boolean(token.username && token.token);
+const isLoggedIn = Boolean(login.username && login.token);
 
 class App extends Component {
   render() {
+    const { children } = this.props;
+
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Gists</h2>
+          <h2>
+            <Link to="/">
+              Gists
+            </Link>
+          </h2>
+          <Link to="/new">
+            New Gist
+          </Link>
         </div>
         {!isLoggedIn && ('Please provide a login.')}
-        {isLoggedIn && (<Gists/>)}
+        {isLoggedIn && children}
       </div>
     );
   }
