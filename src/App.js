@@ -13,11 +13,11 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>
-            <Link to="/">
+            <Link to="/" className="App-headerLink">
               Gists
             </Link>
           </h2>
-          <Link to="/new">
+          <Link to="/new" className="App-createGistLink">
             New Gist
           </Link>
         </div>

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getResources, getStatus } from 'resourceful-redux';
+import './Gists.css';
 import { readManyUsersGists } from './state/gists/action-creators';
 import login from './personal-access-token';
 
@@ -19,16 +20,11 @@ class Gists extends Component {
         {usersGistsStatus.succeeded && (
           <ul className="Gists-list">
             {usersGists.map(gist => (
-              <li key={gist.id}>
-                <div className="Gists-gistName">
-                  {username}/
-                  <Link to={`/${gist.id}`}>
-                    {Object.keys(gist.files)[0]}
-                  </Link>
-                </div>
-                <div className="Gists-delete">
-                  <button>Delete</button>
-                </div>
+              <li key={gist.id} className="Gists-listItem">
+                {username}/
+                <Link to={`/${gist.id}`}>
+                  {Object.keys(gist.files)[0]}
+                </Link>
               </li>
             ))}
           </ul>

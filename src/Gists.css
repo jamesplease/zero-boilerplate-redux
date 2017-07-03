@@ -1,0 +1,11 @@
+.Gists-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Gists-listItem {
+  display: flex;
+  padding: 5px 0;
+  height: 25px;
+}
