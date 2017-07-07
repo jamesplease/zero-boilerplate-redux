@@ -7,6 +7,8 @@
   padding: 20px 0;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30px;
 }
 
 .App-header h2 {

@@ -1,6 +1,6 @@
 import {
   createResources, readResources, updateResources, deleteResources
-} from 'resourceful-redux/action-creators';
+} from 'resourceful-action-creators';
 import headers from '../../utils/headers';
 
 export function createGist(gist) {
