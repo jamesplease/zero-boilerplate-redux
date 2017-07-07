@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import login from './personal-access-token';
+import login from '../personal-access-token';
 
 const isLoggedIn = Boolean(login.username && login.token);
 

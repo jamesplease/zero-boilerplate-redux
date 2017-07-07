@@ -5,10 +5,10 @@ import { Router } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Route, Switch } from 'react-router-dom';
 import './index.css';
-import App from './App';
-import Gists from './Gists';
-import Gist from './Gist';
-import CreateGist from './CreateGist';
+import App from './components/App';
+import Gists from './components/Gists';
+import Gist from './components/Gist';
+import CreateGist from './components/CreateGist';
 import registerServiceWorker from './registerServiceWorker';
 import store from './state/store';
 

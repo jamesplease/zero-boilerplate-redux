@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getResources, getStatus } from 'resourceful-redux';
 import './Gists.css';
-import { readManyUsersGists } from './state/gists/action-creators';
-import login from './personal-access-token';
+import { readManyUsersGists } from '../state/gists/action-creators';
+import login from '../personal-access-token';
 
 const username = login.username;
 

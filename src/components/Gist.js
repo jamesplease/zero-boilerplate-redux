@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getStatus } from 'resourceful-redux';
 import _ from 'lodash';
 import './Gist.css';
-import { readGist } from './state/gists/action-creators';
+import { readGist } from '../state/gists/action-creators';
 
 class Gist extends Component {
   render() {

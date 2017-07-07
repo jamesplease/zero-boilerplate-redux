@@ -1,7 +1,7 @@
 import {
   createResources, readResources, updateResources, deleteResources
 } from 'resourceful-redux/action-creators';
-import headers from '../../common/utils/headers';
+import headers from '../../utils/headers';
 
 export function createGist(gist) {
   const xhrOptions = {
