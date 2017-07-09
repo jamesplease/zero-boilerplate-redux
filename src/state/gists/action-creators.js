@@ -3,6 +3,12 @@ import {
 } from 'resourceful-action-creators';
 import headers from '../../utils/headers';
 
+// Resourceful Action Creators only exports bulk actions, so we use this to
+// coerce single-resource responses into arrays
+function transformSingular(body) {
+  return [body];
+}
+
 export function createGist(gist) {
   const xhrOptions = {
     url: 'https://api.github.com/gists',
@@ -14,6 +20,7 @@ export function createGist(gist) {
   return createResources({
     resourceName: 'gists',
     label: 'createGist',
+    transformData: transformSingular,
     xhrOptions
   });
 }
@@ -25,17 +32,11 @@ export function readGist(gistId) {
     headers
   };
 
-  // The action creators extension only exports bulk actions, so we need to
-  // coerce single-resource responses into arrays
-  function transformData(body) {
-    return [body];
-  }
-
   return readResources({
     resourceName: 'gists',
     resources: [gistId],
+    transformData: transformSingular,
     xhrOptions,
-    transformData
   });
 }
 
@@ -65,6 +66,7 @@ export function updateGist(gistId, gist) {
   return updateResources({
     resourceName: 'gists',
     resources: [gistId],
+    transformData: transformSingular,
     xhrOptions
   });
 }
