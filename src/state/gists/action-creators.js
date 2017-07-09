@@ -1,7 +1,7 @@
 import {
   createResources, readResources, updateResources, deleteResources
-} from 'resourceful-redux/action-creators';
-import headers from '../../common/utils/headers';
+} from 'resourceful-action-creators';
+import headers from '../../utils/headers';
 
 export function createGist(gist) {
   const xhrOptions = {
@@ -25,10 +25,17 @@ export function readGist(gistId) {
     headers
   };
 
+  // The action creators extension only exports bulk actions, so we need to
+  // coerce single-resource responses into arrays
+  function transformData(body) {
+    return [body];
+  }
+
   return readResources({
     resourceName: 'gists',
     resources: [gistId],
-    xhrOptions
+    xhrOptions,
+    transformData
   });
 }
 

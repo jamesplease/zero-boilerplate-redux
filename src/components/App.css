@@ -1,0 +1,39 @@
+.App {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.App-header {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30px;
+}
+
+.App-header h2 {
+  margin: 0;
+}
+
+.App-headerLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.App-createGistLink {
+  text-decoration: none;
+  margin-left: auto;
+  border-radius: 3px;
+  background: #3593f5;
+  color: #fff;
+  padding: 8px 10px;
+}
+
+.App-createGistLink:hover {
+  background: #2076d0;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

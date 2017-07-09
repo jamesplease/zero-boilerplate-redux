@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getResources, getStatus } from 'resourceful-redux';
-import { readManyUsersGists } from './state/gists/action-creators';
-import login from './personal-access-token';
+import './Gists.css';
+import { readManyUsersGists } from '../state/gists/action-creators';
+import login from '../personal-access-token';
 
 const username = login.username;
 
@@ -16,10 +18,13 @@ class Gists extends Component {
         {usersGistsStatus.pending && ('Loading gists...')}
         {usersGistsStatus.failed && ('There was an error loading gists.')}
         {usersGistsStatus.succeeded && (
-          <ul>
+          <ul className="Gists-list">
             {usersGists.map(gist => (
-              <li key={gist.id}>
-                {username}/{gist.id}
+              <li key={gist.id} className="Gists-listItem">
+                {username}/
+                <Link to={`/${gist.id}`}>
+                  {Object.keys(gist.files)[0]}
+                </Link>
               </li>
             ))}
           </ul>

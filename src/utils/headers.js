@@ -1,4 +1,4 @@
-import token from '../../personal-access-token.json';
+import token from '../personal-access-token.json';
 
 // Basic Authentication for GitHub. Documentation for this is here:
 // https://developer.github.com/v3/auth/#basic-authentication
