@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { getStatus } from 'resourceful-redux';
 import _ from 'lodash';
 import './Gist.css';
-import { readGist, deleteGist } from '../state/gists/action-creators';
+import { readGist, updateGist, deleteGist } from '../state/gists/action-creators';
 
 class Gist extends Component {
   render() {
-    const { gist, readGistStatus, deleteGistStatus } = this.props;
+    const {
+      gist, readGistStatus, deleteGistStatus, updateGistStatus
+    } = this.props;
 
     // When the Gist is successfully deleted, this render function may be called
     // once, or a handful of times. We can just return `null` until the page
@@ -16,6 +18,8 @@ class Gist extends Component {
     if (deleteGistStatus.succeeded) {
       return null;
     }
+
+    const changePending = updateGistStatus.pending || deleteGistStatus.pending;
 
     return (
       <div className="Gist">
@@ -29,8 +33,14 @@ class Gist extends Component {
             <div>
               <button
                 className="Gist-deleteBtn"
+                onClick={this.saveGist}
+                disabled={changePending}>
+                Save Changes
+              </button>
+              <button
+                className="Gist-deleteBtn"
                 onClick={this.deleteGist}
-                disabled={deleteGistStatus.pending}>
+                disabled={changePending}>
                 Delete Gist
               </button>
             </div>
@@ -41,8 +51,7 @@ class Gist extends Component {
                     <h3>{filename}</h3>
                     <textarea
                       disabled={deleteGistStatus.pending}
-                      defaultValue={file.content}
-                      onChange={(e) => this.onChangeFile(filename, e)}/>
+                      defaultValue={file.content}/>
                   </div>
                 );
               })}
@@ -97,8 +106,24 @@ class Gist extends Component {
     }
   }
 
-  onChangeFile = (fileName, e) => {
-    console.log('updating', fileName, e);
+  saveGist = () => {
+    const { gistId, updateGist } = this.props;
+
+    updateGist(gistId, {
+      description: 'the description for this gist',
+      files: {
+        'file1.txt': {
+          content: 'updated file contents'
+        },
+        'old_name.txt': {
+          filename: 'new_name.txt',
+          content: 'modified contents'
+        },
+        'new_file.txt': {
+          content: 'a new file'
+        }
+      }
+    });
   }
 }
 
@@ -110,19 +135,22 @@ function mapStateToProps(state, props) {
   const gist = gists.resources[gistId];
   const readGistStatus = getStatus(state, `gists.meta.${gistId}.readStatus`, true);
   const deleteGistStatus = getStatus(state, `gists.meta.${gistId}.deleteStatus`);
+  const updateGistStatus = getStatus(state, `gists.meta.${gistId}.updateStatus`);
 
   return {
     gists,
     gistId,
     gist,
     readGistStatus,
-    deleteGistStatus
+    deleteGistStatus,
+    updateGistStatus
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     readGist,
+    updateGist,
     deleteGist
   }, dispatch);
 }
