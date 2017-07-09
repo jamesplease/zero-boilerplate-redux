@@ -1,3 +1,4 @@
+import { actionTypes } from 'resourceful-redux';
 import {
   createResources, readResources, updateResources, deleteResources
 } from 'resourceful-action-creators';
@@ -23,6 +24,14 @@ export function createGist(gist) {
     transformData: transformSingular,
     xhrOptions
   });
+}
+
+export function resetCreateGistStatus() {
+  return {
+    type: actionTypes.CREATE_RESOURCES_NULL,
+    resourceName: 'gists',
+    label: 'createGist'
+  };
 }
 
 export function readGist(gistId) {

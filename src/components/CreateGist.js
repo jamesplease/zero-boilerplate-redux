@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getStatus, getResources } from 'resourceful-redux';
-import { createGist } from '../state/gists/action-creators';
+import { createGist, resetCreateGistStatus } from '../state/gists/action-creators';
 
 class CreateGist extends Component {
   render() {
@@ -14,6 +14,7 @@ class CreateGist extends Component {
         {createGistStatus.succeeded && (
           <div>
             Your gist was successfully created.
+            {' '}
             <Link to={`/${createdGist.id}`}>
               Go to Gist details.
             </Link>
@@ -30,10 +31,23 @@ class CreateGist extends Component {
     );
   }
 
+  componentWillUnmount() {
+    const { resetCreateGistStatus } = this.props;
+
+    if (this.createGistXhr) {
+      this.createGistXhr.abort();
+    }
+
+    // We need to reset whatever the current status of the create request is
+    // when we navigate away. That way, users can create new gists when they
+    // return.
+    resetCreateGistStatus();
+  }
+
   createGist = () => {
     const { createGist } = this.props;
 
-    createGist({
+    this.createGistXhr = createGist({
       description: 'the description for this gist',
       public: true,
       files: {
@@ -57,7 +71,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createGist
+    createGist,
+    resetCreateGistStatus
   }, dispatch);
 }
 
