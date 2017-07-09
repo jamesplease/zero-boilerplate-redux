@@ -8,6 +8,7 @@ import { createGist, resetCreateGistStatus } from '../state/gists/action-creator
 class CreateGist extends Component {
   render() {
     const { createGistStatus, createdGist } = this.props;
+    const { description } = this.state;
 
     return (
       <div className="Gist">
@@ -21,15 +22,36 @@ class CreateGist extends Component {
           </div>
         )}
         {!createGistStatus.succeeded && (
-          <button
-            onClick={this.createGist}
-            disabled={createGistStatus.pending}>
-            Create Gist
-          </button>
+          <div>
+            <div className="Gist-actionBar">
+              <button
+                onClick={this.createGist}
+                disabled={createGistStatus.pending}>
+                Create Gist
+              </button>
+            </div>
+            <div className="Gist-description">
+              <div className="Gist-descriptionLabel">
+                Description:
+              </div>
+              <input
+                id="gist-description"
+                type="text"
+                className="gist_descriptionInput"
+                value={description}
+                placeholder="Gist description..."
+                onChange={this.onDescriptionChange}/>
+            </div>
+          </div>
         )}
       </div>
     );
   }
+
+  state = {
+    description: '',
+    files: {}
+  };
 
   componentWillUnmount() {
     const { resetCreateGistStatus } = this.props;
@@ -46,15 +68,22 @@ class CreateGist extends Component {
 
   createGist = () => {
     const { createGist } = this.props;
+    const { description } = this.state;
 
     this.createGistXhr = createGist({
-      description: 'the description for this gist',
+      description,
       public: true,
       files: {
         'file1.txt': {
           content: 'String file contents'
         }
       }
+    });
+  }
+
+  onDescriptionChange = (event) => {
+    this.setState({
+      description: event.target.value
     });
   }
 }

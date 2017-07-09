@@ -21,10 +21,12 @@ class Gists extends Component {
           <ul className="Gists-list">
             {usersGists.map(gist => (
               <li key={gist.id} className="Gists-listItem">
-                {username}/
+                {username}&nbsp;/&nbsp;
                 <Link to={`/${gist.id}`}>
                   {Object.keys(gist.files)[0]}
                 </Link>
+                &nbsp;
+                {!gist.public && '🔒'}
               </li>
             ))}
           </ul>
