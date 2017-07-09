@@ -89,7 +89,12 @@ class Gist extends Component {
 
   deleteGist = () => {
     const { gistId, deleteGist } = this.props;
-    deleteGist(gistId);
+    const confirmedDelete = window.confirm(
+      'Are you sure you wish to delete this gist? This cannot be undone.'
+    );
+    if (confirmedDelete) {
+      deleteGist(gistId);
+    }
   }
 
   onChangeFile = (fileName, e) => {

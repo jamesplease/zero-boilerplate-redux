@@ -2,7 +2,7 @@
 
 A common criticism of Redux is that it requires writing a lot of boilerplate.
 This is an application that is meant to show a sophisticated CRUD webapp that
-is built using almost no Redux boilerplate.
+is built using nearly zero Redux boilerplate.
 
 ### Technologies used
 
