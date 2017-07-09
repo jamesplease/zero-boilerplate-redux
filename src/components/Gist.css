@@ -1,0 +1,42 @@
+.Gist-actionBar {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.Gist-saveBtn {
+  margin-right: 10px;
+}
+
+.Gist-description {
+  margin-bottom: 20px;
+}
+
+.gist_descriptionInput {
+  width: 100%;
+  padding: 7px 8px;
+  border: 1px solid #ccc;
+}
+
+.Gist-descriptionLabel {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.Gist-file {
+  margin-bottom: 25px;
+}
+
+.gist_fileNameInput {
+  padding: 7px 8px;
+  border: 1px solid #ccc;
+  width: 300px;
+  margin-bottom: 7px;
+}
+
+.Gist-textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  border: 1px solid #ccc;
+  padding: 7px 8px;
+}

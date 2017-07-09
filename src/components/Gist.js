@@ -9,8 +9,9 @@ import { readGist, updateGist, deleteGist } from '../state/gists/action-creators
 class Gist extends Component {
   render() {
     const {
-      gist, readGistStatus, deleteGistStatus, updateGistStatus
+      readGistStatus, deleteGistStatus, updateGistStatus
     } = this.props;
+    const { description, files } = this.state;
 
     // When the Gist is successfully deleted, this render function may be called
     // once, or a handful of times. We can just return `null` until the page
@@ -26,40 +27,70 @@ class Gist extends Component {
         {readGistStatus.pending && ('Loading gist...')}
         {readGistStatus.failed && ('There was an error while retrieving this gist')}
         {readGistStatus.succeeded && (
-          <div>
-            <div className="Gist-description">
-              Description: {gist.description}
-            </div>
+          <form>
             <div>
-              <button
-                className="Gist-deleteBtn"
-                onClick={this.saveGist}
-                disabled={changePending}>
-                Save Changes
-              </button>
-              <button
-                className="Gist-deleteBtn"
-                onClick={this.deleteGist}
-                disabled={changePending}>
-                Delete Gist
-              </button>
+              <div className="Gist-actionBar">
+                <button
+                  className="Gist-saveBtn"
+                  onClick={this.saveGist}
+                  disabled={changePending}>
+                  Save Changes
+                </button>
+                <button
+                  className="Gist-deleteBtn"
+                  onClick={this.deleteGist}
+                  disabled={changePending}>
+                  Delete Gist
+                </button>
+                {updateGistStatus.pending && 'Saving gist...'}
+              </div>
+              <div className="Gist-description">
+                <div className="Gist-descriptionLabel">
+                  Description:
+                </div>
+                <input
+                  id="gist-description"
+                  type="text"
+                  className="gist_descriptionInput"
+                  value={description}
+                  placeholder="Gist description..."
+                  onChange={this.onDescriptionChange}/>
+              </div>
+              <div>
+                {_.map(files, (file, originalFilename) => {
+                  return (
+                    <div className="Gist-file" key={originalFilename}>
+                      <input
+                        type="text"
+                        className="gist_fileNameInput"
+                        value={file.filename}
+                        onChange={(event) => this.onFileNameChange(originalFilename, event)}/>
+                      <textarea
+                        className="Gist-textarea"
+                        disabled={deleteGistStatus.pending}
+                        value={file.content}
+                        onChange={(event) => this.onFileContentsChange(originalFilename, event)}/>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div>
-              {_.map(gist.files, (file, filename) => {
-                return (
-                  <div key={filename}>
-                    <h3>{filename}</h3>
-                    <textarea
-                      disabled={deleteGistStatus.pending}
-                      defaultValue={file.content}/>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          </form>
         )}
       </div>
     );
+  }
+
+  constructor(props) {
+    super(props);
+
+    const gist = this.props.gist || {};
+    const { description, files } = gist;
+
+    this.state = {
+      description,
+      files
+    };
   }
 
   componentDidMount() {
@@ -73,16 +104,33 @@ class Gist extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { deleteGistStatus, history } = this.props;
+    const { deleteGistStatus, readGistStatus, history, gist } = this.props;
 
-    if (!deleteGistStatus.succeeded) {
-      return;
+    if (deleteGistStatus.succeeded) {
+      const { gists, gistId } = prevProps;
+      const prevGistDeleteStatus = getStatus({ gists }, `gists.meta.${gistId}.deleteStatus`);
+      if (prevGistDeleteStatus.pending) {
+        history.push('/');
+      }
     }
 
-    const { gists, gistId } = prevProps;
-    const prevGistDeleteStatus = getStatus({ gists }, `gists.meta.${gistId}.deleteStatus`);
-    if (prevGistDeleteStatus.pending) {
-      history.push('/');
+    // These checks are a temporary way to handle fetching the "details" of a
+    // gist. A plugin would handle this better with some metadata on the
+    // resource
+    if (readGistStatus.succeeded) {
+      const { gists, gistId } = prevProps;
+      const prevGistReadStatus = getStatus({ gists }, `gists.meta.${gistId}.readStatus`);
+      if (prevGistReadStatus.pending) {
+        const newState = {
+          files: gist.files
+        };
+
+        if (!this.state.description) {
+          newState.description = gist.description;
+        }
+
+        this.setState(newState);
+      }
     }
   }
 
@@ -108,21 +156,38 @@ class Gist extends Component {
 
   saveGist = () => {
     const { gistId, updateGist } = this.props;
+    const { description, files } = this.state;
 
     updateGist(gistId, {
-      description: 'the description for this gist',
-      files: {
-        'file1.txt': {
-          content: 'updated file contents'
-        },
-        'old_name.txt': {
-          filename: 'new_name.txt',
-          content: 'modified contents'
-        },
-        'new_file.txt': {
-          content: 'a new file'
-        }
-      }
+      description,
+      files
+    });
+  }
+
+  onDescriptionChange = (event) => {
+    this.setState({
+      description: event.target.value
+    });
+  }
+
+  onFileNameChange = (oldFilename, event) => {
+    const { files } = this.state;
+    const clonedFiles = _.cloneDeep(files);
+    const existingFile = clonedFiles[oldFilename];
+    existingFile.filename = event.target.value;
+    this.setState({
+      files: clonedFiles
+    });
+  }
+
+  onFileContentsChange = (oldFilename, event) => {
+    const { files } = this.state;
+    const clonedFiles = _.cloneDeep(files);
+    const existingFile = clonedFiles[oldFilename];
+    existingFile.content = event.target.value;
+
+    this.setState({
+      files: clonedFiles
     });
   }
 }

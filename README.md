@@ -11,3 +11,13 @@ is built using nearly zero Redux boilerplate.
 - [React Router](https://github.com/ReactTraining/react-router) for routing
 - [Resourceful Redux](https://github.com/jmeas/resourceful-redux/) for managing
   resource data
+
+### Forms
+
+If you're building a CRUD application, you likely need to work with a lot of
+forms. For simplicity's sake, this project doesn't use a forms library.
+
+Two forms libraries that are worth looking into are:
+
+- [`react-redux-form`](https://davidkpiano.github.io/react-redux-form/docs.html)
+- [redux-form](https://github.com/erikras/redux-form)
