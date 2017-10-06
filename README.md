@@ -9,7 +9,7 @@ is built using nearly zero Redux boilerplate.
 - [Create React App](https://github.com/facebookincubator/create-react-app) for
   scaffolding
 - [React Router](https://github.com/ReactTraining/react-router) for routing
-- [Resourceful Redux](https://github.com/jmeas/resourceful-redux/) for managing
+- [Redux Resource](https://github.com/jmeas/redux-resource/) for managing
   resource data
 
 ### Forms

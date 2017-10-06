@@ -1,7 +1,7 @@
-import { actionTypes } from 'resourceful-redux';
+import { actionTypes } from 'redux-resource';
 import {
   createResources, readResources, updateResources, deleteResources
-} from 'resourceful-action-creators';
+} from 'redux-resource-xhr';
 import headers from '../../utils/headers';
 
 // Resourceful Action Creators only exports bulk actions, so we use this to
@@ -18,11 +18,13 @@ export function createGist(gist) {
     headers
   };
 
-  return createResources({
+  return dispatch => createResources({
     resourceName: 'gists',
-    label: 'createGist',
+    request: 'createGist',
+    list: 'createdGists',
     transformData: transformSingular,
-    xhrOptions
+    xhrOptions,
+    dispatch
   });
 }
 
@@ -30,7 +32,7 @@ export function resetCreateGistStatus() {
   return {
     type: actionTypes.CREATE_RESOURCES_NULL,
     resourceName: 'gists',
-    label: 'createGist'
+    request: 'createGist'
   };
 }
 
@@ -41,11 +43,12 @@ export function readGist(gistId) {
     headers
   };
 
-  return readResources({
+  return dispatch => readResources({
     resourceName: 'gists',
     resources: [gistId],
     transformData: transformSingular,
     xhrOptions,
+    dispatch
   });
 }
 
@@ -56,11 +59,13 @@ export function readManyUsersGists(username) {
     headers
   };
 
-  return readResources({
+  return dispatch => readResources({
     resourceName: 'gists',
-    label: 'usersGists',
-    mergeLabelIds: false,
-    xhrOptions
+    request: 'getUsersGists',
+    list: 'usersGists',
+    mergeListIds: false,
+    xhrOptions,
+    dispatch
   });
 }
 
@@ -72,11 +77,12 @@ export function updateGist(gistId, gist) {
     headers
   };
 
-  return updateResources({
+  return dispatch => updateResources({
     resourceName: 'gists',
     resources: [gistId],
     transformData: transformSingular,
-    xhrOptions
+    xhrOptions,
+    dispatch
   });
 }
 
@@ -86,9 +92,10 @@ export function deleteGist(gistId) {
     headers
   };
 
-  return deleteResources({
+  return dispatch => deleteResources({
     resourceName: 'gists',
     resources: [gistId],
-    xhrOptions
+    xhrOptions,
+    dispatch
   });
 }

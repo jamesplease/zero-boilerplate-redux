@@ -12,9 +12,9 @@
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
     "redux": "^3.7.1",
+    "redux-resource": "^2.0.0-beta1",
+    "redux-resource-xhr": "^2.0.0-beta1",
     "redux-thunk": "^2.2.0",
-    "resourceful-action-creators": "0.4.0",
-    "resourceful-redux": "0.4.0",
     "xhr": "^2.4.0"
   },
   "scripts": {
