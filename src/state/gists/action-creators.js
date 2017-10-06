@@ -4,8 +4,8 @@ import {
 } from 'redux-resource-xhr';
 import headers from '../../utils/headers';
 
-// Resourceful Action Creators only exports bulk actions, so we use this to
-// coerce single-resource responses into arrays
+// The Redux Resource XHR library only exports bulk actions, so we use this
+// function to turn single-resource responses from the server into arrays.
 function transformSingular(body) {
   return [body];
 }

@@ -47,6 +47,7 @@ class Gists extends Component {
 
   fetchUsersGists = () => {
     const { readManyUsersGists } = this.props;
+
     if (this.readManyUsersGistsXhr) {
       this.readManyUsersGistsXhr.abort();
     }
@@ -58,6 +59,7 @@ class Gists extends Component {
 function mapStateToProps(state) {
   const usersGists = getResources(state, 'gists', 'usersGists');
   const usersGistsStatus = getStatus(state, 'gists.requests.getUsersGists.status', true);
+
   return {
     usersGists,
     usersGistsStatus

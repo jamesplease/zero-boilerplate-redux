@@ -110,14 +110,18 @@ class Gist extends Component {
     if (deleteGistStatus.succeeded) {
       const { gists, gistId } = prevProps;
       const prevGistDeleteStatus = getStatus({ gists }, `gists.meta.${gistId}.deleteStatus`);
+
+      // When we transition from pending to succeeded, then we know that the deletion was
+      // successful. When that happens, we redirect the user back to the homepage.
       if (prevGistDeleteStatus.pending) {
         history.push('/');
       }
     }
 
     // These checks are a temporary way to handle fetching the "details" of a
-    // gist. A plugin would handle this better with some metadata on the
-    // resource
+    // gist. A Redux Resource plugin would handle this better with some metadata
+    // on the resource. For more on plugins, refer to the documentation:
+    // https://redux-resource.js.org/docs/guides/plugins.html
     if (readGistStatus.succeeded) {
       const { gists, gistId } = prevProps;
       const prevGistReadStatus = getStatus({ gists }, `gists.meta.${gistId}.readStatus`);
@@ -147,9 +151,11 @@ class Gist extends Component {
 
   deleteGist = () => {
     const { gistId, deleteGist } = this.props;
+
     const confirmedDelete = window.confirm(
       'Are you sure you wish to delete this gist? This cannot be undone.'
     );
+
     if (confirmedDelete) {
       deleteGist(gistId);
     }
@@ -176,6 +182,7 @@ class Gist extends Component {
     const clonedFiles = _.cloneDeep(files);
     const existingFile = clonedFiles[oldFilename];
     existingFile.filename = event.target.value;
+
     this.setState({
       files: clonedFiles
     });
@@ -199,7 +206,17 @@ function mapStateToProps(state, props) {
   const { gistId } = match.params;
 
   const gist = gists.resources[gistId];
+
+  // The third argument here is `treatNullAsPending`. This means that requests with a
+  // null status will be returned as pending, which is ideal for requests that occur
+  // when a page first loads. For more, refer to the Tips section of the `getStatus`
+  // documentation:
+  // https://redux-resource.js.org/docs/api-reference/get-status.html#tips
   const readGistStatus = getStatus(state, `gists.meta.${gistId}.readStatus`, true);
+
+  // These requests are initiated by a user's action, so we do not pass `treatNullAsPending`
+  // as `true`. Otherwise, the interface would always display a loading indicator to the user.
+  // Not sure what I mean? Try it out, and you can see what happens.
   const deleteGistStatus = getStatus(state, `gists.meta.${gistId}.deleteStatus`);
   const updateGistStatus = getStatus(state, `gists.meta.${gistId}.updateStatus`);
 
