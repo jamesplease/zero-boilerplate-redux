@@ -1,3 +1,3 @@
-import { resourceReducer } from 'resourceful-redux';
+import { resourceReducer } from 'redux-resource';
 
 export default resourceReducer('gists');

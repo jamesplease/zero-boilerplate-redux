@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getStatus, getResources } from 'resourceful-redux';
+import { getStatus, getResources } from 'redux-resource';
 import { createGist, resetCreateGistStatus } from '../state/gists/action-creators';
 
 class CreateGist extends Component {
@@ -89,8 +89,8 @@ class CreateGist extends Component {
 }
 
 function mapStateToProps(state, props) {
-  const createGistStatus = getStatus(state, 'gists.labels.createGist.status');
-  const createdGist = getResources(state, 'gists', 'createGist')[0];
+  const createGistStatus = getStatus(state, 'gists.requests.createGist.status');
+  const createdGist = getResources(state, 'gists', 'createdGists')[0];
 
   return {
     createdGist,

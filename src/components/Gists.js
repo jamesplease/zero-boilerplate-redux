@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getResources, getStatus } from 'resourceful-redux';
+import { getResources, getStatus } from 'redux-resource';
 import './Gists.css';
 import { readManyUsersGists } from '../state/gists/action-creators';
 import login from '../personal-access-token';
@@ -57,7 +57,7 @@ class Gists extends Component {
 
 function mapStateToProps(state) {
   const usersGists = getResources(state, 'gists', 'usersGists');
-  const usersGistsStatus = getStatus(state, 'gists.labels.usersGists.status', true);
+  const usersGistsStatus = getStatus(state, 'gists.requests.getUsersGists.status', true);
   return {
     usersGists,
     usersGistsStatus
