@@ -29,6 +29,7 @@ class CreateGist extends Component {
                 disabled={createGistStatus.pending}>
                 Create Gist
               </button>
+              {createGistStatus.pending && 'Creating gist...'}
             </div>
             <div className="Gist-description">
               <div className="Gist-descriptionLabel">

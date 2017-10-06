@@ -43,6 +43,7 @@ class Gist extends Component {
                   Delete Gist
                 </button>
                 {updateGistStatus.pending && 'Saving gist...'}
+                {deleteGistStatus.pending && 'Deleting gist...'}
               </div>
               <div className="Gist-description">
                 <div className="Gist-descriptionLabel">
