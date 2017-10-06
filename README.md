@@ -63,5 +63,5 @@ forms. For simplicity's sake, this project doesn't use a forms library.
 
 Two forms libraries that are worth looking into are:
 
-- [`react-redux-form`](https://davidkpiano.github.io/react-redux-form/docs.html)
+- [react-redux-form](https://davidkpiano.github.io/react-redux-form/docs.html)
 - [redux-form](https://github.com/erikras/redux-form)
