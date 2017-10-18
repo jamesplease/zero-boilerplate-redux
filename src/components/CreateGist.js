@@ -91,7 +91,7 @@ class CreateGist extends Component {
 
 function mapStateToProps(state, props) {
   const createGistStatus = getStatus(state, 'gists.requests.createGist.status');
-  const createdGist = getResources(state, 'gists', 'createdGists')[0];
+  const createdGist = getResources(state.gists, 'createdGists')[0];
 
   return {
     createdGist,
