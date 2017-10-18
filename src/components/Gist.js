@@ -9,7 +9,7 @@ import { readGist, updateGist, deleteGist } from '../state/gists/action-creators
 class Gist extends Component {
   render() {
     const {
-      readGistStatus, deleteGistStatus, updateGistStatus
+      readGistStatus, deleteGistStatus, updateGistStatus, gistNotFound
     } = this.props;
     const { description, files } = this.state;
 
@@ -25,7 +25,8 @@ class Gist extends Component {
     return (
       <div className="Gist">
         {readGistStatus.pending && ('Loading gist...')}
-        {readGistStatus.failed && ('There was an error while retrieving this gist')}
+        {readGistStatus.failed && !gistNotFound && ('There was an error while retrieving this gist')}
+        {readGistStatus.failed && gistNotFound && ('This gist could not be found.')}
         {readGistStatus.succeeded && (
           <form>
             <div>
@@ -213,6 +214,13 @@ function mapStateToProps(state, props) {
   // documentation:
   // https://redux-resource.js.org/docs/api-reference/get-status.html#tips
   const readGistStatus = getStatus(state, `gists.meta.${gistId}.readStatus`, true);
+  
+  // We're using the HTTP Status Code plugin to determine if the error is a 404. Typically,
+  // if you're using standard HTTP requests in your application, you'll want to include the
+  // HTTP Status Codes plugin. You can see how this is set up by referring to the gists
+  // reducer file. For more on the HTTP Status Codes plugin, see the docs at:
+  // https://redux-resource.js.org/docs/extras/http-status-codes-plugin.html
+  const gistNotFound = _.get(state, `gists.meta.${gistId}.readStatusCode`) === 404;
 
   // These requests are initiated by a user's action, so we do not pass `treatNullAsPending`
   // as `true`. Otherwise, the interface would always display a loading indicator to the user.
@@ -224,6 +232,7 @@ function mapStateToProps(state, props) {
     gists,
     gistId,
     gist,
+    gistNotFound,
     readGistStatus,
     deleteGistStatus,
     updateGistStatus
