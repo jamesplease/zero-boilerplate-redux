@@ -57,7 +57,7 @@ class Gists extends Component {
 }
 
 function mapStateToProps(state) {
-  const usersGists = getResources(state, 'gists', 'usersGists');
+  const usersGists = getResources(state.gists, 'usersGists');
   const usersGistsStatus = getStatus(state, 'gists.requests.getUsersGists.status', true);
 
   return {
