@@ -86,6 +86,14 @@ export function updateGist(gistId, gist) {
   });
 }
 
+export function clearUpdateGist(gistId) {
+  return {
+    type: actionTypes.UPDATE_RESOURCES_NULL,
+    resourceName: 'gists',
+    resources: [gistId]
+  };
+}
+
 export function deleteGist(gistId) {
   const xhrOptions = {
     url: `https://api.github.com/gists/${gistId}`,

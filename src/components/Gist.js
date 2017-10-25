@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { getStatus } from 'redux-resource';
 import _ from 'lodash';
 import './Gist.css';
-import { readGist, updateGist, deleteGist } from '../state/gists/action-creators';
+import {
+  readGist, updateGist, deleteGist, clearUpdateGist
+} from '../state/gists/action-creators';
 
 class Gist extends Component {
   render() {
@@ -44,6 +46,7 @@ class Gist extends Component {
                   Delete Gist
                 </button>
                 {updateGistStatus.pending && 'Saving gist...'}
+                {updateGistStatus.succeeded && 'Saved!'}
                 {deleteGistStatus.pending && 'Deleting gist...'}
               </div>
               <div className="Gist-description">
@@ -106,10 +109,12 @@ class Gist extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { deleteGistStatus, readGistStatus, history, gist } = this.props;
+    const {
+      deleteGistStatus, readGistStatus, updateGistStatus, clearUpdateGist, history, gist
+    } = this.props;
+    const { gists, gistId } = prevProps;
 
     if (deleteGistStatus.succeeded) {
-      const { gists, gistId } = prevProps;
       const prevGistDeleteStatus = getStatus({ gists }, `gists.meta.${gistId}.deleteStatus`);
 
       // When we transition from pending to succeeded, then we know that the deletion was
@@ -124,7 +129,6 @@ class Gist extends Component {
     // on the resource. For more on plugins, refer to the documentation:
     // https://redux-resource.js.org/docs/guides/plugins.html
     if (readGistStatus.succeeded) {
-      const { gists, gistId } = prevProps;
       const prevGistReadStatus = getStatus({ gists }, `gists.meta.${gistId}.readStatus`);
       if (prevGistReadStatus.pending) {
         const newState = {
@@ -136,6 +140,15 @@ class Gist extends Component {
         }
 
         this.setState(newState);
+      }
+    }
+
+    // If the request just succeeded, then we set a timer to reset the request back to a NULL
+    // state. That way, our success message disappears after a set amount of time.
+    if (updateGistStatus.succeeded) {
+      const prevGistUpdateStatus = getStatus({ gists }, `gists.meta.${gistId}.updateStatus`);
+      if (prevGistUpdateStatus.pending) {
+        setTimeout(() => clearUpdateGist(gistId), 1500);
       }
     }
   }
@@ -243,7 +256,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     readGist,
     updateGist,
-    deleteGist
+    deleteGist,
+    clearUpdateGist
   }, dispatch);
 }
 
