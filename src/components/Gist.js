@@ -94,7 +94,10 @@ class Gist extends Component {
     super(props);
 
     const gist = this.props.gist || {};
-    const { description, files } = gist;
+    const {
+      description = '',
+      files = []
+    } = gist;
 
     this.state = {
       description,
