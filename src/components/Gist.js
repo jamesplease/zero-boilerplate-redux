@@ -5,7 +5,7 @@ import { getStatus } from 'redux-resource';
 import _ from 'lodash';
 import './Gist.css';
 import {
-  readGist, updateGist, deleteGist, clearUpdateGist
+  readGist, updateGist, deleteGist, resetUpdateGistStatus
 } from '../state/gists/action-creators';
 
 class Gist extends Component {
@@ -110,7 +110,7 @@ class Gist extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      deleteGistStatus, readGistStatus, updateGistStatus, clearUpdateGist, history, gist
+      deleteGistStatus, readGistStatus, updateGistStatus, resetUpdateGistStatus, history, gist
     } = this.props;
     const { gists, gistId } = prevProps;
 
@@ -148,7 +148,7 @@ class Gist extends Component {
     if (updateGistStatus.succeeded) {
       const prevGistUpdateStatus = getStatus({ gists }, `gists.meta.${gistId}.updateStatus`);
       if (prevGistUpdateStatus.pending) {
-        setTimeout(() => clearUpdateGist(gistId), 1500);
+        setTimeout(() => resetUpdateGistStatus(gistId), 1500);
       }
     }
   }
@@ -257,7 +257,7 @@ function mapDispatchToProps(dispatch) {
     readGist,
     updateGist,
     deleteGist,
-    clearUpdateGist
+    resetUpdateGistStatus
   }, dispatch);
 }
 

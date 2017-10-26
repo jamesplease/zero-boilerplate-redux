@@ -86,7 +86,7 @@ export function updateGist(gistId, gist) {
   });
 }
 
-export function clearUpdateGist(gistId) {
+export function resetUpdateGistStatus(gistId) {
   return {
     type: actionTypes.UPDATE_RESOURCES_NULL,
     resourceName: 'gists',
