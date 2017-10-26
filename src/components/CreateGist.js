@@ -30,6 +30,7 @@ class CreateGist extends Component {
                 Create Gist
               </button>
               {createGistStatus.pending && 'Creating gist...'}
+              {createGistStatus.failed && 'An error occurred while creating the gist.'}
             </div>
             <div className="Gist-description">
               <div className="Gist-descriptionLabel">
