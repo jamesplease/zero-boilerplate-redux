@@ -27,7 +27,11 @@ class Gist extends Component {
     return (
       <div className="Gist">
         {readGistStatus.pending && ('Loading gist...')}
-        {readGistStatus.failed && !gistNotFound && ('There was an error while retrieving this gist')}
+        {readGistStatus.failed && !gistNotFound && (
+          <span>
+            There was an error while retrieving this gist. <button onClick={this.readGist}>Try again.</button>
+          </span>
+        )}
         {readGistStatus.failed && gistNotFound && ('This gist could not be found.')}
         {readGistStatus.succeeded && (
           <form>

@@ -16,7 +16,11 @@ class Gists extends Component {
     return (
       <div className="Gists">
         {usersGistsStatus.pending && ('Loading gists...')}
-        {usersGistsStatus.failed && ('There was an error loading gists.')}
+        {usersGistsStatus.failed && (
+          <span>
+            There was an error loading gists. <button onClick={this.fetchUsersGists}>Try again.</button>
+          </span>
+        )}
         {usersGistsStatus.succeeded && (
           <ul className="Gists-list">
             {usersGists.map(gist => (
