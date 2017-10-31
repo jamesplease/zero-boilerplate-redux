@@ -155,7 +155,7 @@ class Gist extends Component {
     if (updateGistStatus.succeeded) {
       const prevGistUpdateStatus = getStatus({ gists }, `gists.meta.${gistId}.updateStatus`);
       if (prevGistUpdateStatus.pending) {
-        setTimeout(() => resetUpdateGistStatus(gistId), 1500);
+        this.resettingUpdate = setTimeout(() => resetUpdateGistStatus(gistId), 1500);
       }
     }
   }
@@ -185,6 +185,13 @@ class Gist extends Component {
   saveGist = () => {
     const { gistId, updateGist } = this.props;
     const { description, files } = this.state;
+
+    // We may have a timer already set to "reset" the
+    // state of the update request if a previous request
+    // succeeded. If that is the case, we need to end the
+    // timer.
+    // For more, see `componentDidUpdate`
+    clearTimeout(this.resettingUpdate);
 
     updateGist(gistId, {
       description,
