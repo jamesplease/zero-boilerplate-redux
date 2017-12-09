@@ -7,7 +7,6 @@ import App from './components/App';
 import Gists from './components/Gists';
 import Gist from './components/Gist';
 import CreateGist from './components/CreateGist';
-import registerServiceWorker from './registerServiceWorker';
 import store from './state/store';
 
 ReactDOM.render((
@@ -25,4 +24,3 @@ ReactDOM.render((
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'));
-registerServiceWorker();
