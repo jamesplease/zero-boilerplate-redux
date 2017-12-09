@@ -1,28 +1,33 @@
 import { actionTypes } from 'redux-resource';
-import {
-  createResources, readResources, updateResources, deleteResources
-} from 'redux-resource-xhr';
+import { crudRequest } from 'redux-resource-xhr';
 import headers from '../../utils/headers';
+
+// This file heavily leverages the Redux Resource XHR library. To learn
+// more about its API, refer to the documentation:
+// https://redux-resource.js.org/docs/extras/redux-resource-xhr.html
 
 // The Redux Resource XHR library only exports bulk actions, so we use this
 // function to turn single-resource responses from the server into arrays.
-function transformSingular(body) {
+function singleResourceToArray(body) {
   return [body];
 }
 
 export function createGist(gist) {
   const xhrOptions = {
+    method: 'POST',
     url: 'https://api.github.com/gists',
     json: true,
     body: gist,
     headers
   };
 
-  return dispatch => createResources({
-    resourceName: 'gists',
-    request: 'createGist',
-    list: 'createdGists',
-    transformData: transformSingular,
+  return dispatch => crudRequest('create', {
+    actionDefaults: {
+      resourceName: 'gists',
+      request: 'createGist',
+      list: 'createdGists',
+    },
+    transformData: singleResourceToArray,
     xhrOptions,
     dispatch
   });
@@ -38,15 +43,18 @@ export function resetCreateGistStatus() {
 
 export function readGist(gistId) {
   const xhrOptions = {
+    method: 'GET',
     url: `https://api.github.com/gists/${gistId}`,
     json: true,
     headers
   };
 
-  return dispatch => readResources({
-    resourceName: 'gists',
-    resources: [gistId],
-    transformData: transformSingular,
+  return dispatch => crudRequest('read', {
+    actionDefaults: {
+      resourceName: 'gists',
+      resources: [gistId],
+    },
+    transformData: singleResourceToArray,
     xhrOptions,
     dispatch
   });
@@ -54,16 +62,19 @@ export function readGist(gistId) {
 
 export function readManyUsersGists(username) {
   const xhrOptions = {
+    method: 'GET',
     url: `https://api.github.com/users/${username}/gists`,
     json: true,
     headers
   };
 
-  return dispatch => readResources({
-    resourceName: 'gists',
-    request: 'getUsersGists',
-    list: 'usersGists',
-    mergeListIds: false,
+  return dispatch => crudRequest('read', {
+    actionDefaults: {
+      resourceName: 'gists',
+      request: 'getUsersGists',
+      list: 'usersGists',
+      mergeListIds: false,
+    },
     xhrOptions,
     dispatch
   });
@@ -71,16 +82,19 @@ export function readManyUsersGists(username) {
 
 export function updateGist(gistId, gist) {
   const xhrOptions = {
+    method: 'PATCH',
     url: `https://api.github.com/gists/${gistId}`,
     json: true,
     body: gist,
     headers
   };
 
-  return dispatch => updateResources({
-    resourceName: 'gists',
-    resources: [gistId],
-    transformData: transformSingular,
+  return dispatch => crudRequest('update', {
+    actionDefaults: {
+      resourceName: 'gists',
+      resources: [gistId],
+    },
+    transformData: singleResourceToArray,
     xhrOptions,
     dispatch
   });
@@ -96,13 +110,16 @@ export function resetUpdateGistStatus(gistId) {
 
 export function deleteGist(gistId) {
   const xhrOptions = {
+    method: 'DELETE',
     url: `https://api.github.com/gists/${gistId}`,
     headers
   };
 
-  return dispatch => deleteResources({
-    resourceName: 'gists',
-    resources: [gistId],
+  return dispatch => crudRequest('delete', {
+    actionDefaults: {
+      resourceName: 'gists',
+      resources: [gistId],
+    },
     xhrOptions,
     dispatch
   });
