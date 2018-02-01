@@ -21,10 +21,9 @@ class App extends Component {
             New Gist
           </Link>
         </div>
-        {!isLoggedIn && (
+        {!isLoggedIn &&
           `Please provide a GitHub Personal Access Token to use this application.
-          For more, refer to this project's documentation on GitHub.`
-        )}
+          For more, refer to this project's documentation on GitHub.`}
         {isLoggedIn && children}
       </div>
     );
