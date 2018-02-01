@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getResources, getStatus } from 'redux-resource';
+import { getResources, getStatus } from 'react-redux-resource';
 import './Gists.css';
 import { readManyUsersGists } from '../state/gists/action-creators';
 import login from '../personal-access-token';

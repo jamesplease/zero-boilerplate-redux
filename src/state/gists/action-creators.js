@@ -1,4 +1,4 @@
-import { actionTypes } from 'redux-resource';
+import { actionTypes } from 'react-redux-resource';
 import { crudRequest } from 'redux-resource-xhr';
 import headers from '../../utils/headers';
 
