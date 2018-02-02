@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from './components/App';
-import Gists from './components/Gists';
-import Gist from './components/Gist';
+import Gists from './components/Gists2';
+import Gist from './components/Gist2';
 import CreateGist from './components/CreateGist';
 import store from './state/store';
 

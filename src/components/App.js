@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import login from '../personal-access-token';
-import { ReadGist } from '../request-components/Gist';
 
 const isLoggedIn = Boolean(login.username && login.token);
 
@@ -25,22 +24,7 @@ class App extends Component {
         {!isLoggedIn &&
           `Please provide a GitHub Personal Access Token to use this application.
           For more, refer to this project's documentation on GitHub.`}
-        {isLoggedIn && (
-          <ReadGist gistId="a6396779d28ed91eb1a55d54a5d228c9">
-            {stuff => {
-              console.log('the stuff', stuff);
-              const { status } = stuff;
-
-              return (
-                <div>
-                  {status.pending && <div>Loading...</div>}
-                  {status.error && <div>Here is an error</div>}
-                  {status.succeeded && <div>Got it!</div>}
-                </div>
-              );
-            }}
-          </ReadGist>
-        )}
+        {isLoggedIn && children}
       </div>
     );
   }

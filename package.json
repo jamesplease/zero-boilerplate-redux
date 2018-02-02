@@ -5,6 +5,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "react": "^16.0.0",
+    "react-composer": "^2.1.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
     "react-redux-resource": "0.0.1",
