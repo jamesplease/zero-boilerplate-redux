@@ -27,7 +27,10 @@ class App extends Component {
           For more, refer to this project's documentation on GitHub.`}
         {isLoggedIn && (
           <ReadGist gistId="a6396779d28ed91eb1a55d54a5d228c9">
-            {() => <div />}
+            {stuff => {
+              console.log('the stuff', stuff);
+              return <div>Got it</div>;
+            }}
           </ReadGist>
         )}
       </div>
