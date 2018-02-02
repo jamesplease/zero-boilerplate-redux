@@ -1,5 +1,5 @@
 import React from 'react';
-import { Resource, Fetch } from 'react-redux-resource';
+import { ResourceRequest, Fetch } from 'react-redux-resource';
 import headers from '../utils/headers';
 
 export function ReadGist({ gistId, children }) {
@@ -8,7 +8,8 @@ export function ReadGist({ gistId, children }) {
   );
 
   return (
-    <Resource
+    <ResourceRequest
+      treatNullAsPending
       transformData={gist => [gist]}
       resourceName="gists"
       request={ReadGistRequest}

@@ -29,7 +29,15 @@ class App extends Component {
           <ReadGist gistId="a6396779d28ed91eb1a55d54a5d228c9">
             {stuff => {
               console.log('the stuff', stuff);
-              return <div>Got it</div>;
+              const { status } = stuff;
+
+              return (
+                <div>
+                  {status.pending && <div>Loading...</div>}
+                  {status.error && <div>Here is an error</div>}
+                  {status.succeeded && <div>Got it!</div>}
+                </div>
+              );
             }}
           </ReadGist>
         )}
