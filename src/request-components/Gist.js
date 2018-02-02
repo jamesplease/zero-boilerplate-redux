@@ -4,7 +4,11 @@ import headers from '../utils/headers';
 
 export function ReadGist({ gistId, children }) {
   const ReadGistRequest = (
-    <Fetch url={`https://api.github.com/gists/${gistId}`} headers={headers} />
+    <Fetch
+      resourceName="gists"
+      url={`https://api.github.com/gists/${gistId}`}
+      headers={headers}
+    />
   );
 
   return <Resource request={ReadGistRequest} children={children} />;
