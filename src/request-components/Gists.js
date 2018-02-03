@@ -16,6 +16,7 @@ export function ReadGist({ gistId, children }) {
   return (
     <ResourceRequest
       treatNullAsPending
+      crudAction="read"
       transformData={gist => [gist]}
       resourceName="gists"
       request={request}
@@ -35,6 +36,7 @@ export function ReadUsersGists({ username, children }) {
   return (
     <ResourceRequest
       treatNullAsPending
+      crudAction="read"
       resourceName="gists"
       list="usersGists"
       mergeListIds={false}
@@ -52,6 +54,7 @@ export function CreateGist({ children }) {
   return (
     <ResourceRequest
       resourceName="gists"
+      crudAction="create"
       transformData={singleResourceToArray}
       list="createdGists"
       request={request}
@@ -71,6 +74,7 @@ export function UpdateGist({ gistId, children }) {
 
   return (
     <ResourceRequest
+      crudAction="update"
       resourceName="gists"
       resources={[gistId]}
       transformData={singleResourceToArray}
@@ -92,6 +96,7 @@ export function DeleteGist({ gistId, children }) {
 
   return (
     <ResourceRequest
+      crudAction="delete"
       resourceName="gists"
       resources={[gistId]}
       request={request}
