@@ -1,6 +1,9 @@
 import { resourceReducer } from 'react-redux-resource';
 import { httpStatusCodes } from 'redux-resource-plugins';
 
+// This reducer manages our gists resource. I normally prefer a "ducks"-style
+// organization scheme, but with React Redux Resource, you don't need to do anything
+// other than define the reducer. Neat.
 export default resourceReducer('gists', {
   plugins: [
     // This plugin gives us access to the HTTP Status Codes from our requests. The primary

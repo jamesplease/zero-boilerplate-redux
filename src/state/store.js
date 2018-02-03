@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import gists from './gists/reducer';
+import gists from './gists';
 
 // Redux Resource works best in conjunction with `combineReducers`.
 // Although this project only has one resource, `gists`, using

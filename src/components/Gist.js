@@ -153,8 +153,10 @@ export class Gist extends Component {
     // state. That way, our success message disappears after a set amount of time.
     if (updateGist.status.succeeded) {
       if (prevUpdateGist.status.pending) {
-        console.log('timing out the update now');
-        // this.resettingUpdate = setTimeout(() => resetUpdateGistStatus(gistId), 1500);
+        this.resettingUpdate = setTimeout(
+          () => updateGist.setFetchToIdle(),
+          1500
+        );
       }
     }
   }
