@@ -5,7 +5,7 @@ import gists from './gists/reducer';
 // Redux Resource works best in conjunction with `combineReducers`.
 // Although this project only has one resource, `gists`, using
 // `combineReducers` allows you to add more resources as needed.
-// The docs for `combineReducers` can be found here:
+// For more, see the he documentation for `combineReducers`:
 // http://redux.js.org/docs/api/combineReducers.html
 const reducer = combineReducers({
   gists

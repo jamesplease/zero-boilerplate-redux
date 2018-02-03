@@ -8,8 +8,6 @@ export default resourceReducer('gists', {
     // did the request fail because the user was unauthorized, or because the resource
     // was not found? For more on the HTTP Status Codes plugin, see the documentation at:
     // https://redux-resource.js.org/docs/extras/http-status-codes-plugin.html
-    // If you're using, say, gRPC, then you would want to write a similar plugin that
-    // handles the gRPC status codes.
     httpStatusCodes
   ]
 });
