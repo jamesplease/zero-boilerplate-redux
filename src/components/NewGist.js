@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { CreateGist } from '../request-components/Gists';
-import { resetCreateGistStatus } from '../state/gists/action-creators';
 
 export default class NewGist extends Component {
   render() {
@@ -56,7 +55,6 @@ export default class NewGist extends Component {
   };
 
   getCreateRequestBody = () => {
-    const { createGist } = this.props;
     const { description } = this.state;
 
     const gist = {
