@@ -12,36 +12,6 @@ function singleResourceToArray(body) {
   return [body];
 }
 
-export function createGist(gist) {
-  const xhrOptions = {
-    method: 'POST',
-    url: 'https://api.github.com/gists',
-    json: true,
-    body: gist,
-    headers
-  };
-
-  return dispatch =>
-    crudRequest('create', {
-      actionDefaults: {
-        resourceName: 'gists',
-        request: 'createGist',
-        list: 'createdGists'
-      },
-      transformData: singleResourceToArray,
-      xhrOptions,
-      dispatch
-    });
-}
-
-export function resetCreateGistStatus() {
-  return {
-    type: actionTypes.CREATE_RESOURCES_NULL,
-    resourceName: 'gists',
-    request: 'createGist'
-  };
-}
-
 export function readGist(gistId) {
   const xhrOptions = {
     method: 'GET',

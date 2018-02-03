@@ -6,7 +6,7 @@ import './index.css';
 import App from './components/App';
 import Gists from './components/Gists';
 import Gist from './components/Gist';
-import CreateGist from './components/CreateGist';
+import NewGist from './components/NewGist';
 import store from './state/store';
 
 ReactDOM.render(
@@ -18,7 +18,7 @@ ReactDOM.render(
           <App location={location}>
             <Switch>
               <Route exact path="/" component={Gists} />
-              <Route exact path="/new" component={CreateGist} />
+              <Route exact path="/new" component={NewGist} />
               <Route exact path="/:gistId" component={Gist} />
             </Switch>
           </App>
