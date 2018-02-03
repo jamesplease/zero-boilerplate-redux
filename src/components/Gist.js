@@ -10,7 +10,7 @@ import { ReadGist, UpdateGist, DeleteGist } from '../request-components/Gists';
 export class Gist extends Component {
   render() {
     const { gistId, requests } = this.props;
-    const [readGist, updateGist, deleteGist] = requests;
+    const { readGist, updateGist, deleteGist } = requests;
     const { description, files } = this.state;
 
     const gist = readGist.resources[gistId];
@@ -99,7 +99,7 @@ export class Gist extends Component {
     super(props);
 
     const { gistId, requests } = props;
-    const [readGist] = requests;
+    const { readGist } = requests;
     const gist = readGist.resources[gistId] || {};
     const { description = '', files = [] } = gist;
 
@@ -112,8 +112,12 @@ export class Gist extends Component {
   // I need to update this logic to better handle caches
   componentDidUpdate(prevProps) {
     const { history, requests } = this.props;
-    const [readGist, updateGist, deleteGist] = requests;
-    const [prevReadGist, prevUpdateGist, prevDeleteGist] = prevProps.requests;
+    const { readGist, updateGist, deleteGist } = requests;
+    const {
+      readGist: prevReadGist,
+      updateGist: prevUpdateGist,
+      deleteGist: prevDeleteGist
+    } = prevProps.requests;
     const { gists, gistId } = prevProps;
 
     const gist = readGist.resources[gistId];
@@ -230,8 +234,12 @@ export default function GistResources(routeParams) {
         <UpdateGist gistId={gistId} />,
         <DeleteGist gistId={gistId} />
       ]}>
-      {requests => (
-        <Gist requests={requests} gistId={gistId} {...routeParams} />
+      {([readGist, updateGist, deleteGist]) => (
+        <Gist
+          requests={{ readGist, updateGist, deleteGist }}
+          gistId={gistId}
+          {...routeParams}
+        />
       )}
     </Composer>
   );
