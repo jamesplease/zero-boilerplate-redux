@@ -4,7 +4,10 @@ import headers from '../utils/headers';
 
 export function ReadUsersGists({ username, children }) {
   const request = (
-    <Fetch url={`https://api.github.com/users/${username}/gists`} headers={headers} />
+    <Fetch
+      url={`https://api.github.com/users/${username}/gists`}
+      headers={headers}
+    />
   );
 
   return (
