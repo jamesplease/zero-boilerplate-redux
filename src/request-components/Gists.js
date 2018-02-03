@@ -14,22 +14,8 @@ export function ReadUsersGists({ username, children }) {
     <ResourceRequest
       treatNullAsPending
       resourceName="gists"
-      request={request}
-      children={children}
-    />
-  );
-}
-
-export function ReadGist({ gistId, children }) {
-  const request = (
-    <Fetch url={`https://api.github.com/gists/${gistId}`} headers={headers} />
-  );
-
-  return (
-    <ResourceRequest
-      treatNullAsPending
-      transformData={gist => [gist]}
-      resourceName="gists"
+      list="usersGists"
+      mergeListIds={false}
       request={request}
       children={children}
     />
