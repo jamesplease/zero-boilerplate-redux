@@ -10,7 +10,11 @@ function singleResourceToArray(body) {
 
 export function ReadGist({ gistId, children }) {
   const request = (
-    <Fetch url={`https://api.github.com/gists/${gistId}`} headers={headers} />
+    <Fetch
+      url={`https://api.github.com/gists/${gistId}`}
+      headers={headers}
+      fetchPolicy="cache-and-network"
+    />
   );
 
   return (
@@ -30,6 +34,7 @@ export function ReadUsersGists({ username, children }) {
     <Fetch
       url={`https://api.github.com/users/${username}/gists`}
       headers={headers}
+      fetchPolicy="cache-and-network"
     />
   );
 
