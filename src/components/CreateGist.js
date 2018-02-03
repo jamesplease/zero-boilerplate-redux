@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getStatus, getResources } from 'redux-resource';
+import { getStatus, getResources } from 'react-redux-resource';
 import { createGist, resetCreateGistStatus } from '../state/gists/action-creators';
 
 class CreateGist extends Component {

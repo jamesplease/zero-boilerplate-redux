@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getStatus } from 'redux-resource';
+import { getStatus } from 'react-redux-resource';
 import _ from 'lodash';
 import './Gist.css';
 import {

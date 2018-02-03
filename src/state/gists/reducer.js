@@ -1,4 +1,4 @@
-import { resourceReducer } from 'redux-resource';
+import { resourceReducer } from 'react-redux-resource';
 import { httpStatusCodes } from 'redux-resource-plugins';
 
 export default resourceReducer('gists', {

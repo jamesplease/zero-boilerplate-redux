@@ -1,4 +1,4 @@
-import { actionTypes } from 'redux-resource';
+import { actionTypes } from 'react-redux-resource';
 import { crudRequest } from 'redux-resource-xhr';
 import headers from '../../utils/headers';
 
@@ -21,16 +21,17 @@ export function createGist(gist) {
     headers
   };
 
-  return dispatch => crudRequest('create', {
-    actionDefaults: {
-      resourceName: 'gists',
-      request: 'createGist',
-      list: 'createdGists',
-    },
-    transformData: singleResourceToArray,
-    xhrOptions,
-    dispatch
-  });
+  return dispatch =>
+    crudRequest('create', {
+      actionDefaults: {
+        resourceName: 'gists',
+        request: 'createGist',
+        list: 'createdGists'
+      },
+      transformData: singleResourceToArray,
+      xhrOptions,
+      dispatch
+    });
 }
 
 export function resetCreateGistStatus() {
@@ -49,35 +50,16 @@ export function readGist(gistId) {
     headers
   };
 
-  return dispatch => crudRequest('read', {
-    actionDefaults: {
-      resourceName: 'gists',
-      resources: [gistId],
-    },
-    transformData: singleResourceToArray,
-    xhrOptions,
-    dispatch
-  });
-}
-
-export function readManyUsersGists(username) {
-  const xhrOptions = {
-    method: 'GET',
-    url: `https://api.github.com/users/${username}/gists`,
-    json: true,
-    headers
-  };
-
-  return dispatch => crudRequest('read', {
-    actionDefaults: {
-      resourceName: 'gists',
-      request: 'getUsersGists',
-      list: 'usersGists',
-      mergeListIds: false,
-    },
-    xhrOptions,
-    dispatch
-  });
+  return dispatch =>
+    crudRequest('read', {
+      actionDefaults: {
+        resourceName: 'gists',
+        resources: [gistId]
+      },
+      transformData: singleResourceToArray,
+      xhrOptions,
+      dispatch
+    });
 }
 
 export function updateGist(gistId, gist) {
@@ -89,15 +71,16 @@ export function updateGist(gistId, gist) {
     headers
   };
 
-  return dispatch => crudRequest('update', {
-    actionDefaults: {
-      resourceName: 'gists',
-      resources: [gistId],
-    },
-    transformData: singleResourceToArray,
-    xhrOptions,
-    dispatch
-  });
+  return dispatch =>
+    crudRequest('update', {
+      actionDefaults: {
+        resourceName: 'gists',
+        resources: [gistId]
+      },
+      transformData: singleResourceToArray,
+      xhrOptions,
+      dispatch
+    });
 }
 
 export function resetUpdateGistStatus(gistId) {
@@ -115,12 +98,13 @@ export function deleteGist(gistId) {
     headers
   };
 
-  return dispatch => crudRequest('delete', {
-    actionDefaults: {
-      resourceName: 'gists',
-      resources: [gistId],
-    },
-    xhrOptions,
-    dispatch
-  });
+  return dispatch =>
+    crudRequest('delete', {
+      actionDefaults: {
+        resourceName: 'gists',
+        resources: [gistId]
+      },
+      xhrOptions,
+      dispatch
+    });
 }
