@@ -22,3 +22,4 @@ yarn-error.log*
 
 personal-access-token.json
 package-lock.json
+.vscode
