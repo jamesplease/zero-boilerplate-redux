@@ -118,7 +118,7 @@ export class Gist extends Component {
       updateGist: prevUpdateGist,
       deleteGist: prevDeleteGist
     } = prevProps.requests;
-    const { gists, gistId } = prevProps;
+    const { gistId } = prevProps;
 
     const gist = readGist.resources[gistId];
 
@@ -176,7 +176,6 @@ export class Gist extends Component {
 
   saveGist = (e, updateGist) => {
     e.preventDefault();
-    const { gistId } = this.props;
     const { description, files } = this.state;
 
     // We may have a timer already set to "reset" the
