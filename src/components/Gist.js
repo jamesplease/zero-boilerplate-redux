@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { getStatus } from 'redux-resource';
-import _ from 'lodash';
-import './Gist.css';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { getStatus } from "redux-resource";
+import _ from "lodash";
+import "./Gist.css";
 import {
-  readGist, updateGist, deleteGist, resetUpdateGistStatus
-} from '../state/gists/action-creators';
+  readGist,
+  updateGist,
+  deleteGist,
+  resetUpdateGistStatus
+} from "../state/gists/action-creators";
 
 class Gist extends Component {
   render() {
     const {
-      readGistStatus, deleteGistStatus, updateGistStatus, gistNotFound
+      readGistStatus,
+      deleteGistStatus,
+      updateGistStatus,
+      gistNotFound
     } = this.props;
     const { description, files } = this.state;
 
@@ -26,13 +32,17 @@ class Gist extends Component {
 
     return (
       <div className="Gist">
-        {readGistStatus.pending && ('Loading gist...')}
-        {readGistStatus.failed && !gistNotFound && (
-          <span>
-            There was an error while retrieving this gist. <button onClick={this.readGist}>Try again.</button>
-          </span>
-        )}
-        {readGistStatus.failed && gistNotFound && ('This gist could not be found.')}
+        {readGistStatus.pending && "Loading gist..."}
+        {readGistStatus.failed &&
+          !gistNotFound && (
+            <span>
+              There was an error while retrieving this gist.{" "}
+              <button onClick={this.readGist}>Try again.</button>
+            </span>
+          )}
+        {readGistStatus.failed &&
+          gistNotFound &&
+          "This gist could not be found."}
         {readGistStatus.succeeded && (
           <form>
             <div>
@@ -40,30 +50,31 @@ class Gist extends Component {
                 <button
                   className="Gist-saveBtn"
                   onClick={this.saveGist}
-                  disabled={changePending}>
+                  disabled={changePending}
+                >
                   Save Changes
                 </button>
                 <button
                   className="Gist-deleteBtn"
                   onClick={this.deleteGist}
-                  disabled={changePending}>
+                  disabled={changePending}
+                >
                   Delete Gist
                 </button>
-                {updateGistStatus.pending && 'Saving gist...'}
-                {updateGistStatus.succeeded && 'Saved!'}
-                {deleteGistStatus.pending && 'Deleting gist...'}
+                {updateGistStatus.pending && "Saving gist..."}
+                {updateGistStatus.succeeded && "Saved!"}
+                {deleteGistStatus.pending && "Deleting gist..."}
               </div>
               <div className="Gist-description">
-                <div className="Gist-descriptionLabel">
-                  Description:
-                </div>
+                <div className="Gist-descriptionLabel">Description:</div>
                 <input
                   id="gist-description"
                   type="text"
                   className="gist_descriptionInput"
                   value={description}
                   placeholder="Gist description..."
-                  onChange={this.onDescriptionChange}/>
+                  onChange={this.onDescriptionChange}
+                />
               </div>
               <div>
                 {_.map(files, (file, originalFilename) => {
@@ -73,12 +84,18 @@ class Gist extends Component {
                         type="text"
                         className="gist_fileNameInput"
                         value={file.filename}
-                        onChange={(event) => this.onFileNameChange(originalFilename, event)}/>
+                        onChange={event =>
+                          this.onFileNameChange(originalFilename, event)
+                        }
+                      />
                       <textarea
                         className="Gist-textarea"
                         disabled={deleteGistStatus.pending}
                         value={file.content}
-                        onChange={(event) => this.onFileContentsChange(originalFilename, event)}/>
+                        onChange={event =>
+                          this.onFileContentsChange(originalFilename, event)
+                        }
+                      />
                     </div>
                   );
                 })}
@@ -94,10 +111,7 @@ class Gist extends Component {
     super(props);
 
     const gist = this.props.gist || {};
-    const {
-      description = '',
-      files = []
-    } = gist;
+    const { description = "", files = [] } = gist;
 
     this.state = {
       description,
@@ -117,17 +131,25 @@ class Gist extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      deleteGistStatus, readGistStatus, updateGistStatus, resetUpdateGistStatus, history, gist
+      deleteGistStatus,
+      readGistStatus,
+      updateGistStatus,
+      resetUpdateGistStatus,
+      history,
+      gist
     } = this.props;
     const { gists, gistId } = prevProps;
 
     if (deleteGistStatus.succeeded) {
-      const prevGistDeleteStatus = getStatus({ gists }, `gists.meta.${gistId}.deleteStatus`);
+      const prevGistDeleteStatus = getStatus(
+        { gists },
+        `gists.meta.${gistId}.deleteStatus`
+      );
 
       // When we transition from pending to succeeded, then we know that the deletion was
       // successful. When that happens, we redirect the user back to the homepage.
       if (prevGistDeleteStatus.pending) {
-        history.push('/');
+        history.push("/");
       }
     }
 
@@ -136,7 +158,10 @@ class Gist extends Component {
     // on the resource. For more on plugins, refer to the documentation:
     // https://redux-resource.js.org/docs/guides/plugins.html
     if (readGistStatus.succeeded) {
-      const prevGistReadStatus = getStatus({ gists }, `gists.meta.${gistId}.readStatus`);
+      const prevGistReadStatus = getStatus(
+        { gists },
+        `gists.meta.${gistId}.readStatus`
+      );
       if (prevGistReadStatus.pending) {
         const newState = {
           files: gist.files
@@ -150,12 +175,18 @@ class Gist extends Component {
       }
     }
 
-    // If the request just succeeded, then we set a timer to reset the request back to a NULL
+    // If the request just succeeded, then we set a timer to reset the request back to an IDLE
     // state. That way, our success message disappears after a set amount of time.
     if (updateGistStatus.succeeded) {
-      const prevGistUpdateStatus = getStatus({ gists }, `gists.meta.${gistId}.updateStatus`);
+      const prevGistUpdateStatus = getStatus(
+        { gists },
+        `gists.meta.${gistId}.updateStatus`
+      );
       if (prevGistUpdateStatus.pending) {
-        this.resettingUpdate = setTimeout(() => resetUpdateGistStatus(gistId), 1500);
+        this.resettingUpdate = setTimeout(
+          () => resetUpdateGistStatus(gistId),
+          1500
+        );
       }
     }
   }
@@ -168,19 +199,19 @@ class Gist extends Component {
     }
 
     this.readGistXhr = readGist(gistId);
-  }
+  };
 
   deleteGist = () => {
     const { gistId, deleteGist } = this.props;
 
     const confirmedDelete = window.confirm(
-      'Are you sure you wish to delete this gist? This cannot be undone.'
+      "Are you sure you wish to delete this gist? This cannot be undone."
     );
 
     if (confirmedDelete) {
       deleteGist(gistId);
     }
-  }
+  };
 
   saveGist = () => {
     const { gistId, updateGist } = this.props;
@@ -197,13 +228,13 @@ class Gist extends Component {
       description,
       files
     });
-  }
+  };
 
-  onDescriptionChange = (event) => {
+  onDescriptionChange = event => {
     this.setState({
       description: event.target.value
     });
-  }
+  };
 
   onFileNameChange = (oldFilename, event) => {
     const { files } = this.state;
@@ -214,7 +245,7 @@ class Gist extends Component {
     this.setState({
       files: clonedFiles
     });
-  }
+  };
 
   onFileContentsChange = (oldFilename, event) => {
     const { files } = this.state;
@@ -225,7 +256,7 @@ class Gist extends Component {
     this.setState({
       files: clonedFiles
     });
-  }
+  };
 }
 
 function mapStateToProps(state, props) {
@@ -235,25 +266,36 @@ function mapStateToProps(state, props) {
 
   const gist = gists.resources[gistId];
 
-  // The third argument here is `treatNullAsPending`. This means that requests with a
-  // null status will be returned as pending, which is ideal for requests that occur
+  // The third argument here is `treatIdleAsPending`. This means that requests with an
+  // idle status will be returned as pending, which is ideal for requests that occur
   // when a page first loads. For more, refer to the Tips section of the `getStatus`
   // documentation:
   // https://redux-resource.js.org/docs/api-reference/get-status.html#tips
-  const readGistStatus = getStatus(state, `gists.meta.${gistId}.readStatus`, true);
-  
+  const readGistStatus = getStatus(
+    state,
+    `gists.meta.${gistId}.readStatus`,
+    true
+  );
+
   // We're using the HTTP Status Code plugin to determine if the error is a 404. Typically,
   // if you're using standard HTTP requests in your application, you'll want to include the
   // HTTP Status Codes plugin. You can see how this is set up by referring to the gists
   // reducer file. For more on the HTTP Status Codes plugin, see the docs at:
   // https://redux-resource.js.org/docs/extras/http-status-codes-plugin.html
-  const gistNotFound = _.get(state, `gists.meta.${gistId}.readStatusCode`) === 404;
+  const gistNotFound =
+    _.get(state, `gists.meta.${gistId}.readStatusCode`) === 404;
 
-  // These requests are initiated by a user's action, so we do not pass `treatNullAsPending`
+  // These requests are initiated by a user's action, so we do not pass `treatIdleAsPending`
   // as `true`. Otherwise, the interface would always display a loading indicator to the user.
   // Not sure what I mean? Try it out, and you can see what happens.
-  const deleteGistStatus = getStatus(state, `gists.meta.${gistId}.deleteStatus`);
-  const updateGistStatus = getStatus(state, `gists.meta.${gistId}.updateStatus`);
+  const deleteGistStatus = getStatus(
+    state,
+    `gists.meta.${gistId}.deleteStatus`
+  );
+  const updateGistStatus = getStatus(
+    state,
+    `gists.meta.${gistId}.updateStatus`
+  );
 
   return {
     gists,
@@ -267,12 +309,15 @@ function mapStateToProps(state, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    readGist,
-    updateGist,
-    deleteGist,
-    resetUpdateGistStatus
-  }, dispatch);
+  return bindActionCreators(
+    {
+      readGist,
+      updateGist,
+      deleteGist,
+      resetUpdateGistStatus
+    },
+    dispatch
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gist);
