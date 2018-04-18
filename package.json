@@ -11,7 +11,6 @@
     "react-scripts": "1.0.10",
     "redux": "^3.7.1",
     "redux-resource": "^3.0.1",
-    "redux-resource-plugins": "^3.0.1",
     "redux-resource-xhr": "^4.0.1",
     "redux-thunk": "^2.2.0",
     "xhr": "^2.4.0"
