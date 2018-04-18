@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getStatus, getResources } from 'redux-resource';
@@ -100,14 +99,9 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      createGist,
-      resetCreateGistStatus
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  createGist,
+  resetCreateGistStatus
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGist);

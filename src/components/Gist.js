@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getStatus } from 'redux-resource';
 import _ from 'lodash';
@@ -281,7 +280,7 @@ function mapStateToProps(state, props) {
   // reducer file. For more on the HTTP Status Codes plugin, see the docs at:
   // https://redux-resource.js.org/docs/extras/http-status-codes-plugin.html
   const gistNotFound =
-    _.get(state, `gists.meta.${gistId}.readStatusCode`) === 404;
+    _.get(state, `gists.requests.readGist.statusCode`) === 404;
 
   // These requests are initiated by a user's action, so we do not pass `treatIdleAsPending`
   // as `true`. Otherwise, the interface would always display a loading indicator to the user.
@@ -306,16 +305,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      readGist,
-      updateGist,
-      deleteGist,
-      resetUpdateGistStatus
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  readGist,
+  updateGist,
+  deleteGist,
+  resetUpdateGistStatus
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gist);

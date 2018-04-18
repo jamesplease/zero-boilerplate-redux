@@ -53,6 +53,7 @@ export function readGist(gistId) {
   return dispatch =>
     crudRequest('read', {
       actionDefaults: {
+        requestKey: 'readGist',
         resourceType: 'gists',
         resources: [gistId]
       },

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getResources, getStatus } from 'redux-resource';
@@ -73,13 +72,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      readManyUsersGists
-    },
-    dispatch
-  );
-}
+const mapDispatchToProps = {
+  readManyUsersGists
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gists);
