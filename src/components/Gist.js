@@ -153,7 +153,7 @@ class Gist extends Component {
     // These checks are a temporary way to handle fetching the "details" of a
     // gist. A Redux Resource plugin would handle this better with some metadata
     // on the resource. For more on plugins, refer to the documentation:
-    // https://redux-resource.js.org/docs/guides/plugins.html
+    // https://redux-resource.js.org/docs/other-guides/custom-action-types.html
     if (readGistStatus.succeeded) {
       const prevGistReadStatus = getStatus(
         { gists },
