@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { getStatus } from "redux-resource";
-import _ from "lodash";
-import "./Gist.css";
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getStatus } from 'redux-resource';
+import _ from 'lodash';
+import './Gist.css';
 import {
   readGist,
   updateGist,
   deleteGist,
   resetUpdateGistStatus
-} from "../state/gists/action-creators";
+} from '../state/gists/action-creators';
 
 class Gist extends Component {
   render() {
@@ -32,17 +32,17 @@ class Gist extends Component {
 
     return (
       <div className="Gist">
-        {readGistStatus.pending && "Loading gist..."}
+        {readGistStatus.pending && 'Loading gist...'}
         {readGistStatus.failed &&
           !gistNotFound && (
             <span>
-              There was an error while retrieving this gist.{" "}
+              There was an error while retrieving this gist.{' '}
               <button onClick={this.readGist}>Try again.</button>
             </span>
           )}
         {readGistStatus.failed &&
           gistNotFound &&
-          "This gist could not be found."}
+          'This gist could not be found.'}
         {readGistStatus.succeeded && (
           <form>
             <div>
@@ -50,20 +50,18 @@ class Gist extends Component {
                 <button
                   className="Gist-saveBtn"
                   onClick={this.saveGist}
-                  disabled={changePending}
-                >
+                  disabled={changePending}>
                   Save Changes
                 </button>
                 <button
                   className="Gist-deleteBtn"
                   onClick={this.deleteGist}
-                  disabled={changePending}
-                >
+                  disabled={changePending}>
                   Delete Gist
                 </button>
-                {updateGistStatus.pending && "Saving gist..."}
-                {updateGistStatus.succeeded && "Saved!"}
-                {deleteGistStatus.pending && "Deleting gist..."}
+                {updateGistStatus.pending && 'Saving gist...'}
+                {updateGistStatus.succeeded && 'Saved!'}
+                {deleteGistStatus.pending && 'Deleting gist...'}
               </div>
               <div className="Gist-description">
                 <div className="Gist-descriptionLabel">Description:</div>
@@ -111,7 +109,7 @@ class Gist extends Component {
     super(props);
 
     const gist = this.props.gist || {};
-    const { description = "", files = [] } = gist;
+    const { description = '', files = [] } = gist;
 
     this.state = {
       description,
@@ -149,7 +147,7 @@ class Gist extends Component {
       // When we transition from pending to succeeded, then we know that the deletion was
       // successful. When that happens, we redirect the user back to the homepage.
       if (prevGistDeleteStatus.pending) {
-        history.push("/");
+        history.push('/');
       }
     }
 
@@ -205,7 +203,7 @@ class Gist extends Component {
     const { gistId, deleteGist } = this.props;
 
     const confirmedDelete = window.confirm(
-      "Are you sure you wish to delete this gist? This cannot be undone."
+      'Are you sure you wish to delete this gist? This cannot be undone.'
     );
 
     if (confirmedDelete) {
