@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getStatus, getResources } from 'redux-resource';
-import { createGist, resetCreateGistStatus } from '../state/gists/action-creators';
+import {
+  createGist,
+  resetCreateGistStatus
+} from '../state/gists/action-creators';
 
 class CreateGist extends Component {
   render() {
@@ -14,11 +16,8 @@ class CreateGist extends Component {
       <div className="Gist">
         {createGistStatus.succeeded && (
           <div>
-            Your gist was successfully created.
-            {' '}
-            <Link to={`/${createdGist.id}`}>
-              Go to Gist details.
-            </Link>
+            Your gist was successfully created.{' '}
+            <Link to={`/${createdGist.id}`}>Go to Gist details.</Link>
           </div>
         )}
         {!createGistStatus.succeeded && (
@@ -30,19 +29,19 @@ class CreateGist extends Component {
                 Create Gist
               </button>
               {createGistStatus.pending && 'Creating gist...'}
-              {createGistStatus.failed && 'An error occurred while creating the gist.'}
+              {createGistStatus.failed &&
+                'An error occurred while creating the gist.'}
             </div>
             <div className="Gist-description">
-              <div className="Gist-descriptionLabel">
-                Description:
-              </div>
+              <div className="Gist-descriptionLabel">Description:</div>
               <input
                 id="gist-description"
                 type="text"
                 className="gist_descriptionInput"
                 value={description}
                 placeholder="Gist description..."
-                onChange={this.onDescriptionChange}/>
+                onChange={this.onDescriptionChange}
+              />
             </div>
           </div>
         )}
@@ -81,13 +80,13 @@ class CreateGist extends Component {
         }
       }
     });
-  }
+  };
 
-  onDescriptionChange = (event) => {
+  onDescriptionChange = event => {
     this.setState({
       description: event.target.value
     });
-  }
+  };
 }
 
 function mapStateToProps(state, props) {
@@ -100,11 +99,9 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createGist,
-    resetCreateGistStatus
-  }, dispatch);
-}
+const mapDispatchToProps = {
+  createGist,
+  resetCreateGistStatus
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGist);

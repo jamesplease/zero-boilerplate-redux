@@ -6,19 +6,19 @@ with React that is built using nearly zero Redux boilerplate.
 
 ### Technologies used
 
-- [Create React App](https://github.com/facebookincubator/create-react-app) for
+* [Create React App](https://github.com/facebookincubator/create-react-app) for
   scaffolding
-- [React Router](https://github.com/ReactTraining/react-router) for routing
-- [Redux Resource](https://github.com/jmeas/redux-resource/) for managing
+* [React Router](https://github.com/ReactTraining/react-router) for routing
+* [Redux Resource](https://github.com/jmeas/redux-resource/) for managing
   resource data
 
 ### Prequisites
 
-- Node v8+
-- npm v5+
+* Node v8+
+* npm v5+
 
 > Note: This project should also work on earlier versions of Node and npm. It just hasn't
-  been tested.
+> been tested.
 
 ### Installation
 
@@ -48,7 +48,7 @@ For instance, mine looks something like the following:
 
 ```json
 {
-  "username": "jmeas",
+  "username": "jamesplease",
   "token": "12345"
 }
 ```
@@ -63,5 +63,5 @@ forms. For simplicity's sake, this project doesn't use a forms library.
 
 Two forms libraries that are worth looking into are:
 
-- [react-redux-form](https://davidkpiano.github.io/react-redux-form/docs.html)
-- [redux-form](https://github.com/erikras/redux-form)
+* [react-redux-form](https://davidkpiano.github.io/react-redux-form/docs.html)
+* [redux-form](https://github.com/erikras/redux-form)

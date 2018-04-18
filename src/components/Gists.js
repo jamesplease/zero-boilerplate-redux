@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getResources, getStatus } from 'redux-resource';
@@ -15,10 +14,11 @@ class Gists extends Component {
 
     return (
       <div className="Gists">
-        {usersGistsStatus.pending && ('Loading gists...')}
+        {usersGistsStatus.pending && 'Loading gists...'}
         {usersGistsStatus.failed && (
           <span>
-            There was an error loading gists. <button onClick={this.fetchUsersGists}>Try again.</button>
+            There was an error loading gists.{' '}
+            <button onClick={this.fetchUsersGists}>Try again.</button>
           </span>
         )}
         {usersGistsStatus.succeeded && (
@@ -26,9 +26,7 @@ class Gists extends Component {
             {usersGists.map(gist => (
               <li key={gist.id} className="Gists-listItem">
                 {username}&nbsp;/&nbsp;
-                <Link to={`/${gist.id}`}>
-                  {Object.keys(gist.files)[0]}
-                </Link>
+                <Link to={`/${gist.id}`}>{Object.keys(gist.files)[0]}</Link>
                 &nbsp;
                 {!gist.public && '🔒'}
               </li>
@@ -57,12 +55,16 @@ class Gists extends Component {
     }
 
     this.readManyUsersGistsXhr = readManyUsersGists(username);
-  }
+  };
 }
 
 function mapStateToProps(state) {
   const usersGists = getResources(state.gists, 'usersGists');
-  const usersGistsStatus = getStatus(state, 'gists.requests.getUsersGists.status', true);
+  const usersGistsStatus = getStatus(
+    state,
+    'gists.requests.getUsersGists.status',
+    true
+  );
 
   return {
     usersGists,
@@ -70,10 +72,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    readManyUsersGists
-  }, dispatch);
-}
+const mapDispatchToProps = {
+  readManyUsersGists
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gists);
