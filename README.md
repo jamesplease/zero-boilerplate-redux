@@ -34,7 +34,7 @@ This project is a real CRUD application that operates on your GitHub Gists. Ther
 you will need to supply credentials to access your GitHub Gists in the form of a
 [GitHub Personal Access Token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/).
 
-Follow those instructions, then create the file `./src/personal_access_token.json`. It should have the following
+Follow those instructions, then create the file `./src/personal-access-token.json`. It should have the following
 contents:
 
 ```json
